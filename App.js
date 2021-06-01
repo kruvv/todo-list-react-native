@@ -1,32 +1,44 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, FlatList } from "react-native";
+import { StyleSheet, View, FlatList } from "react-native";
+import Form from "./components/Form";
 import Header from "./components/Haeder";
 import ListItem from "./components/ListItem";
 
-
 export default function App() {
   const [listOfItems, setListOfItems] = useState([
-    { text: "Выучить JavaScript", index: 1 },
-    { text: "Решить тесты на Java", index: 2 },
-    { text: "Переделать сервер на Node.js", index: 3 },
-    { text: "Добавить в проект фреймворк Express", index: 4 },
-    { text: "Написать запрос к тестовой базе Postgresql", index: 5 },
-    { text: "Собрать Docker контейнер", index: 6 },
+    { text: "Выучить JavaScript", key: "1" },
+    { text: "Решить тесты  JS", key: "2" },
+    { text: "Переделать сервер на Node.js", key: "3" },
+    { text: "Добавить в проект фреймворк Express", key: "4" },
+    { text: "Написать запрос к тестовой базе Postgresql", key: "5" },
+    { text: "Собрать Docker контейнер", key: 6 },
   ]);
 
-  const renderItem = ({ item }) => <ListItem element={item} />;
+  const renderItem = ({ item }) => (
+    <ListItem element={item} deleteHandler={deleteHandler} />
+  );
+
+  const addHandler = (text) => {
+    setListOfItems((list) => {
+      return [{ text: text, key: String(new Date().getTime()) }, ...list];
+    });
+  };
+
+  const deleteHandler = (key) => {
+    setListOfItems(listOfItems.filter((item) => item.key !== key));
+  };
 
   return (
     <View style={styles.container}>
       <Header />
+      <Form addHandler={addHandler} />
       <View>
-        <FlatList
-          data={listOfItems}
-          renderItem={renderItem}
-        />
+        <FlatList data={listOfItems} renderItem={renderItem} />
       </View>
     </View>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {},
+});
