@@ -11,7 +11,7 @@ export default function App() {
     { text: "Переделать сервер на Node.js", key: "3" },
     { text: "Добавить в проект фреймворк Express", key: "4" },
     { text: "Написать запрос к тестовой базе Postgresql", key: "5" },
-    { text: "Собрать Docker контейнер", key: 6 },
+    { text: "Собрать Docker контейнер", key: "6" },
   ]);
 
   const renderItem = ({ item }) => (
@@ -28,17 +28,31 @@ export default function App() {
     setListOfItems(listOfItems.filter((item) => item.key !== key));
   };
 
+  const scrollToEnd = () => {
+    const wait = new Promise((resolve) => setTimeout(resolve, 0));
+    wait.then(() => {
+      this.flatList.scrollToEnd({ animated: true });
+    });
+  };
+
   return (
     <View style={styles.container}>
       <Header />
       <Form addHandler={addHandler} />
       <View>
-        <FlatList data={listOfItems} renderItem={renderItem} />
+        <FlatList
+          data={listOfItems}
+          renderItem={renderItem}
+          onScroll={scrollToEnd}
+          keyExtractor={(item) => item.key}
+        />
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    paddingBottom: 10
+  },
 });

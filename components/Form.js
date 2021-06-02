@@ -1,5 +1,11 @@
 import React, { useState } from "react";
-import { StyleSheet, TextInput, Button, View } from "react-native";
+import {
+  StyleSheet,
+  TextInput,
+  View,
+  TouchableOpacity,
+  Text,
+} from "react-native";
 
 export default function Form({ addHandler }) {
   const [text, setText] = useState("");
@@ -17,14 +23,14 @@ export default function Form({ addHandler }) {
         placeholder="Введите название задачи"
       />
       <View>
-        <Button
-          color="red"
-          title="Добавить задачу"
+        <TouchableOpacity
           onPress={() => {
             addHandler(text);
             setText("");
           }}
-        />
+        >
+          <Text style={styles.text}>ДОБАВИТЬ ЗАДАЧУ</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -38,5 +44,18 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     marginHorizontal: "20%",
     width: "60%",
+    textAlign: "center",
+  },
+  text: {
+    fontSize: 20,
+    fontWeight: "bold",
+    padding: 20,
+    textAlign: "center",
+    borderRadius: 10,
+    backgroundColor: "#ff0000",
+    borderWidth: 1,
+    width: "80%",
+    marginLeft: "10%",
+    color: "white",
   },
 });
